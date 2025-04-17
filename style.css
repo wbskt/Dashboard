@@ -1,36 +1,122 @@
-.dm-mono-regular, body {
-  font-family: "DM Mono", monospace;
-  font-weight: 400;
-  font-style: normal;
+html, body {
+    height: 100%;
+    margin: 5;
+    display: flex;
+    flex-direction: column;
+    background-color: #010203;
+    color: #5e676e;
 }
 
-.dm-mono-light {
-    font-family: "DM Mono", monospace;
+.roboto-mono-regular {
+    font-family: "Roboto Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.roboto-mono-light {
+    font-family: "Roboto Mono", monospace;
     font-weight: 300;
     font-style: normal;
-  }
-  
-  .dm-mono-medium {
-    font-family: "DM Mono", monospace;
+}
+
+.roboto-mono-medium, body {
+    font-family: "Roboto Mono", monospace;
     font-weight: 500;
     font-style: normal;
-  }
-  
-  .dm-mono-light-italic {
-    font-family: "DM Mono", monospace;
+}
+
+.roboto-mono-light-italic {
+    font-family: "Roboto Mono", monospace;
     font-weight: 300;
     font-style: italic;
-  }
-  
-  .dm-mono-regular-italic {
-    font-family: "DM Mono", monospace;
+}
+
+.roboto-mono-regular-italic {
+    font-family: "Roboto Mono", monospace;
     font-weight: 400;
     font-style: italic;
-  }
-  
-  .dm-mono-medium-italic {
-    font-family: "DM Mono", monospace;
+}
+
+.roboto-mono-medium-italic {
+    font-family: "Roboto Mono", monospace;
     font-weight: 500;
     font-style: italic;
-  }
-  
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    color: orangered;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between input and button */
+}
+
+.input-field {
+    display: inline-block;
+    margin-right: 10px;
+    border: none;
+    color: #5e676e;
+}
+
+input, text {
+  outline-color: initial;
+  outline-style: none;
+  outline-width: initial;
+  border: none;
+  border-radius: .5rem;
+  background: #121212;
+  color: #5e676e;
+  padding: .5em;
+  font-size: 1em;
+  caret-color: orangered;
+  line-height: 1.25em;
+  font-family: "Roboto Mono", monospace;
+}
+
+::placeholder {
+    color: #5e676e; /* Change this to your desired color */
+    opacity: 1; /* Ensure full opacity */
+    font-family: "Roboto Mono", monospace; /* Ensure the same font as input */
+    font-style: italic; /* Ensure the same font style as input */
+}
+
+.button {
+    display: inline-block;
+    user-select: none;
+    border: none;
+    border-radius: .5rem;
+    background: #121212;
+    color: #5e676e;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1em;
+    font-family: "Roboto Mono", monospace;
+    line-height: 1.25em;
+    caret-color: #5e676e;
+    text-align: center;
+    height: calc(1.25em + 1em); /* Match input height */
+    cursor: pointer;
+}
+
+td{
+    padding: 0.5em;
+    border: none;
+    color: #1c87d8;
+    font-family: "Roboto Mono", monospace;
+    font-size: 1em;
+    line-height: 1.25em;
+}
+
+#channelTable {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 2em;
+}
+
+.button:hover {
+    background: #1a1a1a; /* Slightly lighter background on hover */
+}
