@@ -31,9 +31,12 @@
       <div class="user-profile">
         <div class="avatar"></div>
         <div class="user-info">
-          <p class="user-name">Admin User</p>
+          <p class="user-name">{{ user()?.name || 'Admin User' }}</p>
           <p class="user-tier">Free Tier</p>
         </div>
+        <button (click)="logout()" class="notification-btn" title="Logout">
+          <lucide-icon name="log-out" [size]="16"></lucide-icon>
+        </button>
       </div>
     </div>
   </aside>
