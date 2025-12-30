@@ -1,0 +1,45 @@
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  font-size: 10px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+}
+
+.status-active, .status-online, .status-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--emerald-400);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.status-full, .status-error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--red-400);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.status-expired, .status-offline {
+  background-color: rgba(113, 113, 122, 0.1);
+  color: #a1a1aa;
+  border-color: rgba(113, 113, 122, 0.2);
+}
+
+.status-pending, .status-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--amber-400);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.status-info {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--blue-400);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.status-default {
+  background-color: rgba(113, 113, 122, 0.1);
+  color: var(--text-muted);
+  border-color: var(--border-color);
+}

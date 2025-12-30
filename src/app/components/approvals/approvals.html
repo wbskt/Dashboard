@@ -1,0 +1,34 @@
+<div class="approvals-container animate-in">
+  <div class="approvals-info">
+    <div class="info-icon-box">
+      <lucide-icon name="clock" [size]="20"></lucide-icon>
+    </div>
+    <div class="info-text">
+      <h4>Pending Authorizations</h4>
+      <p>These clients have provided a valid PIN but require manual approval based on policy settings.</p>
+    </div>
+  </div>
+
+  <div class="approval-list">
+    <div class="approval-card">
+      <div class="approval-icon-box">
+        <lucide-icon name="zap" [size]="24"></lucide-icon>
+      </div>
+      <div class="approval-details">
+        <h4>
+          esp8266-new-04
+          <app-status-badge status="Pending"></app-status-badge>
+        </h4>
+        <div class="meta-info">
+          <span><lucide-icon name="shield" [size]="12"></lucide-icon> Policy: <span style="color: var(--emerald-400);">London_Office_App</span></span>
+          <span><lucide-icon name="calendar" [size]="12"></lucide-icon> Requested: 2m ago</span>
+          <span><lucide-icon name="users" [size]="12"></lucide-icon> IP: 192.168.1.55</span>
+        </div>
+      </div>
+      <div class="approval-actions">
+        <button class="reject-btn">Reject</button>
+        <button class="approve-btn">Approve Enrollment</button>
+      </div>
+    </div>
+  </div>
+</div>

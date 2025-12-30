@@ -1,0 +1,11 @@
+<span class="status-badge"
+  [ngClass]="{
+    'status-active': status === 'Active' || status === 'Online' || status === 'Success',
+    'status-full': status === 'Full' || status === 'Error',
+    'status-expired': status === 'Expired' || status === 'Offline',
+    'status-pending': status === 'Pending' || status === 'Warning',
+    'status-info': status === 'Info',
+    'status-default': !status
+  }">
+  {{ status }}
+</span>

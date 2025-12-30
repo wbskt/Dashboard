@@ -1,0 +1,83 @@
+<div *ngIf="client() as c" class="detail-container animate-in">
+  
+  <!-- Minimal Header -->
+  <div class="detail-header">
+    <div class="client-meta">
+      <div class="client-avatar">
+        <lucide-icon [name]="c.type === 'Hardware' ? 'cpu' : 'monitor'" [size]="24"></lucide-icon>
+      </div>
+      <div class="client-titles">
+        <h3>{{ c.identifier }}</h3>
+        <div class="client-subtitle">
+          <span><lucide-icon name="shield" [size]="10" style="color: var(--emerald-500);"></lucide-icon> {{ c.policy }}</span>
+          <div class="dot"></div>
+          <span>{{ c.protocol }}</span>
+          <div class="dot"></div>
+          <span>{{ c.ip }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="stat-item">
+        <p class="stat-label">Status</p>
+        <app-status-badge [status]="c.status"></app-status-badge>
+      </div>
+      <div class="stat-item">
+        <p class="stat-label">Latency</p>
+        <p class="stat-value" style="color: var(--emerald-400);">12ms</p>
+      </div>
+      <button class="more-btn">
+        <lucide-icon name="more-vertical" [size]="16"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Minimal Console Section -->
+  <div class="console-card">
+    <div class="console-header">
+      <div class="live-indicator">
+        <div class="pulse-dot animate-pulse"></div>
+        <span class="live-label">Live Messaging Feed</span>
+      </div>
+      <div class="console-actions">
+        <button class="console-btn">
+          <lucide-icon name="trash-2" [size]="12"></lucide-icon> Clear
+        </button>
+        <button class="console-btn">
+          <lucide-icon name="download" [size]="12"></lucide-icon> Export
+        </button>
+      </div>
+    </div>
+
+    <!-- Console Log Area -->
+    <div class="console-log">
+      <div *ngFor="let msg of messages()" class="log-entry">
+        <span class="log-time">[{{ msg.timestamp }}]</span>
+        <span class="log-type"
+          [style.color]="msg.type === 'uplink' ? 'var(--text-dim)' : 'rgba(16, 185, 129, 0.8)'">
+          {{ msg.type }}
+        </span>
+        <span class="log-payload">{{ msg.payload }}</span>
+      </div>
+    </div>
+
+    <!-- Simplified Input Area -->
+    <div class="console-input-area">
+      <div class="input-wrapper">
+        <input 
+          type="text" 
+          placeholder="Send command to client..." 
+          [(ngModel)]="messageInput"
+          (keydown.enter)="sendMessage()"
+          class="console-input"
+        />
+        <button 
+          (click)="sendMessage()"
+          class="send-btn"
+        >
+          <lucide-icon name="send" [size]="16"></lucide-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

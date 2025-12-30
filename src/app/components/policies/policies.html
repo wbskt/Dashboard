@@ -1,0 +1,159 @@
+<!-- Stats Overview -->
+<div class="policies-grid">
+  <app-stat-card title="Active Policies" [value]="activeCount()" colorClass="bg-emerald-500/20 text-emerald-400">
+    <lucide-icon name="shield" [size]="20"></lucide-icon>
+  </app-stat-card>
+  <app-stat-card title="Enrolled" value="143" colorClass="bg-blue-500/20 text-blue-400">
+    <lucide-icon name="users" [size]="20"></lucide-icon>
+  </app-stat-card>
+  <app-stat-card title="Manual Checks" [value]="manualCheckCount()" colorClass="bg-amber-500/20 text-amber-400">
+    <lucide-icon name="zap" [size]="20"></lucide-icon>
+  </app-stat-card>
+  <app-stat-card title="Limit" value="250" colorClass="bg-zinc-500/20 text-zinc-400">
+    <lucide-icon name="lock" [size]="20"></lucide-icon>
+  </app-stat-card>
+</div>
+
+<!-- Table Section -->
+<div class="policies-card">
+  <div class="policies-toolbar">
+    <div class="search-box">
+      <div class="search-input-wrapper">
+        <lucide-icon name="search" [size]="14" class="search-icon"></lucide-icon>
+        <input 
+          type="text" placeholder="Search policy name or PIN..." 
+          [(ngModel)]="searchQuery"
+          class="search-input"
+        />
+      </div>
+      <button class="filter-btn">
+        <lucide-icon name="filter" [size]="16"></lucide-icon>
+      </button>
+    </div>
+    <button (click)="showCreateModal.set(true)" class="new-policy-btn">
+      <lucide-icon name="plus" [size]="16"></lucide-icon> New Policy
+    </button>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="policies-table">
+      <thead>
+        <tr>
+          <th>Policy Configuration</th>
+          <th style="text-align: center;">Enrollment PIN</th>
+          <th>Usage</th>
+          <th style="text-align: center;">Auto-Enroll</th>
+          <th style="text-align: center;">Identifiers</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of filteredPolicies()" class="policy-row">
+          <td>
+            <div class="policy-name-cell">
+              <div class="status-dot" [ngClass]="p.status === 'Active' ? 'active' : 'inactive'"></div>
+              <div class="policy-details">
+                <p>{{ p.name }}</p>
+                <p class="policy-expiry">Expires: {{ p.expiry }}</p>
+              </div>
+            </div>
+          </td>
+          <td style="text-align: center;">
+            <div class="pin-badge">
+              <span class="pin-text">{{ p.pin }}</span>
+              <button style="color: var(--text-dim);"><lucide-icon name="clipboard" [size]="12"></lucide-icon></button>
+            </div>
+          </td>
+          <td>
+            <div class="usage-box">
+              <div class="usage-info">
+                <span>{{ p.enrolled }} Enrolled</span>
+                <span>{{ p.maxClients }} Max</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill"
+                  [style.backgroundColor]="p.status === 'Full' ? 'var(--red-400)' : 'var(--emerald-500)'"
+                  [style.width.%]="(p.enrolled / p.maxClients) * 100">
+                </div>
+              </div>
+            </div>
+          </td>
+          <td style="text-align: center;">
+            <lucide-icon *ngIf="p.autoApprove" name="zap" [size]="14" style="color: var(--emerald-500); margin: 0 auto;"></lucide-icon>
+            <lucide-icon *ngIf="!p.autoApprove" name="clock" [size]="14" style="color: var(--text-dim); margin: 0 auto;"></lucide-icon>
+          </td>
+          <td style="text-align: center;">
+            <div *ngIf="p.allowedIdentifiers && p.allowedIdentifiers.length > 0; else openAccess" class="restricted-badge">
+              <lucide-icon name="lock" [size]="10"></lucide-icon> {{ p.allowedIdentifiers.length }} Restricted
+            </div>
+            <ng-template #openAccess>
+              <span class="open-access">Open Access</span>
+            </ng-template>
+          </td>
+          <td>
+            <app-status-badge [status]="p.status"></app-status-badge>
+          </td>
+          <td style="text-align: right;">
+            <button class="action-btn"><lucide-icon name="more-vertical" [size]="16"></lucide-icon></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Create Policy Modal -->
+<div *ngIf="showCreateModal()" class="modal-overlay">
+  <div class="modal-backdrop" (click)="showCreateModal.set(false)"></div>
+  <div class="modal-content animate-in">
+    <div class="modal-header">
+      <div class="modal-titles">
+        <h3>Create Enrollment Policy</h3>
+        <p class="modal-subtitle">Security Blueprint</p>
+      </div>
+      <button (click)="showCreateModal.set(false)" class="close-btn">
+        <lucide-icon name="x" [size]="20"></lucide-icon>
+      </button>
+    </div>
+    
+    <form (submit)="createPolicy()" class="modal-form">
+      <div class="form-group">
+        <label class="form-label">Policy Name</label>
+        <input autoFocus required type="text" placeholder="e.g. Warehouse_ESP_Batch_A" [(ngModel)]="newPolicy.name" name="name" class="form-input" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Custom PIN</label>
+          <input type="text" placeholder="AUTO-GEN" maxLength="12" [(ngModel)]="newPolicy.pin" name="pin" class="form-input" style="font-family: var(--font-mono);" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Max Clients</label>
+          <input type="number" [(ngModel)]="newPolicy.maxClients" name="maxClients" class="form-input" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Allowed Identifiers</label>
+        <input type="text" placeholder="esp32-v1, app-ios-prod..." [(ngModel)]="newPolicy.allowedIdentifiersStr" name="identifiers" class="form-input" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Expiry Date</label>
+          <input type="date" [(ngModel)]="newPolicy.expiry" name="expiry" class="form-input" style="color: #a1a1aa;" />
+        </div>
+        <div class="auto-enroll-box">
+          <span class="auto-enroll-label">Auto-Enroll</span>
+          <button type="button" (click)="newPolicy.autoApprove = !newPolicy.autoApprove" 
+            class="toggle-switch" 
+            [ngClass]="newPolicy.autoApprove ? 'active' : 'inactive'">
+            <div class="toggle-handle" [ngClass]="{'active': newPolicy.autoApprove}"></div>
+          </button>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" (click)="showCreateModal.set(false)" class="cancel-btn">Cancel</button>
+        <button type="submit" class="submit-btn">Create Policy</button>
+      </div>
+    </form>
+  </div>
+</div>

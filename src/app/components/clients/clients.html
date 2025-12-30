@@ -1,0 +1,94 @@
+<!-- Stats Overview -->
+<div class="clients-grid">
+  <app-stat-card title="Total Clients" [value]="clients().length" colorClass="bg-blue-500/20 text-blue-400">
+    <lucide-icon name="users" [size]="20"></lucide-icon>
+  </app-stat-card>
+  <app-stat-card title="Online Now" [value]="onlineCount()" colorClass="bg-emerald-500/20 text-emerald-400">
+    <lucide-icon name="activity" [size]="20"></lucide-icon>
+  </app-stat-card>
+  <app-stat-card title="Hardware" [value]="hardwareCount()" colorClass="bg-zinc-500/20 text-zinc-400">
+    <lucide-icon name="cpu" [size]="20"></lucide-icon>
+  </app-stat-card>
+  <app-stat-card title="Applications" [value]="appCount()" colorClass="bg-zinc-500/20 text-zinc-400">
+    <lucide-icon name="monitor" [size]="20"></lucide-icon>
+  </app-stat-card>
+</div>
+
+<!-- Toolbar & Table Section -->
+<div class="table-container">
+  <div class="toolbar">
+    <div class="search-box">
+      <div class="search-input-wrapper">
+        <lucide-icon name="search" [size]="14" class="search-icon"></lucide-icon>
+        <input 
+          type="text" placeholder="Search identifiers, IPs, or policies..." 
+          [(ngModel)]="searchQuery"
+          class="search-input"
+        />
+      </div>
+      <button class="filter-btn">
+        <lucide-icon name="filter" [size]="16"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="clients-table">
+      <thead>
+        <tr>
+          <th>Identifier</th>
+          <th>Type</th>
+          <th style="text-align: center;">Protocol</th>
+          <th>Policy</th>
+          <th>Last Seen</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        <tr *ngFor="let c of filteredClients()" 
+          (click)="navigateToDetail(c.id)"
+          class="client-row"
+        >
+          <td>
+            <div class="client-info">
+              <div class="client-icon">
+                <lucide-icon [name]="c.type === 'Hardware' ? 'cpu' : 'monitor'" [size]="16"></lucide-icon>
+              </div>
+              <div class="client-details">
+                <p>{{ c.identifier }}</p>
+                <p class="ip">{{ c.ip }}</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="client-type">{{ c.type }}</span>
+          </td>
+          <td style="text-align: center;">
+            <div class="protocol-badge">
+              <lucide-icon name="wifi" [size]="10" [style.color]="c.protocol === 'WebSocket' ? 'var(--blue-400)' : 'var(--amber-400)'"></lucide-icon>
+              {{ c.protocol }}
+            </div>
+          </td>
+          <td>
+            <div class="policy-link">
+              <lucide-icon name="shield" [size]="12" style="color: rgba(16, 185, 129, 0.5);"></lucide-icon>
+              {{ c.policy }}
+            </div>
+          </td>
+          <td>
+            <span class="last-seen">{{ c.lastSeen }}</span>
+          </td>
+          <td>
+            <app-status-badge [status]="c.status"></app-status-badge>
+          </td>
+          <td style="text-align: right;">
+            <button class="action-btn">
+              <lucide-icon name="chevron-right" [size]="18"></lucide-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

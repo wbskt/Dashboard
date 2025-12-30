@@ -1,0 +1,65 @@
+<div class="shell-container">
+  
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-box">W</div>
+      <span class="brand-name">wbskt</span>
+    </div>
+    
+    <nav class="nav-links">
+      <a routerLink="/clients" routerLinkActive="active" class="nav-link">
+        <lucide-icon name="users" [size]="18"></lucide-icon>
+        <span>Clients</span>
+      </a>
+      <a routerLink="/policies" routerLinkActive="active" class="nav-link">
+        <lucide-icon name="shield" [size]="18"></lucide-icon>
+        <span>Policies</span>
+      </a>
+      <a routerLink="/approvals" routerLinkActive="active" class="nav-link">
+        <lucide-icon name="zap" [size]="18"></lucide-icon>
+        <span style="flex: 1; text-align: left;">Approvals</span>
+        <span class="nav-badge">2</span>
+      </a>
+      <a routerLink="/logs" routerLinkActive="active" class="nav-link">
+        <lucide-icon name="file-text" [size]="18"></lucide-icon>
+        <span>Logs</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="avatar"></div>
+        <div class="user-info">
+          <p class="user-name">Admin User</p>
+          <p class="user-tier">Free Tier</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <h2 class="header-title">Platform</h2>
+      </div>
+      <div class="header-actions">
+        <button class="sync-btn">
+          <lucide-icon name="refresh-cw" [size]="14"></lucide-icon> Sync
+        </button>
+        <div class="divider"></div>
+        <button class="notification-btn">
+          <lucide-icon name="bell" [size]="18"></lucide-icon>
+          <span class="notification-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="page-content">
+       <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

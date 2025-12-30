@@ -1,0 +1,44 @@
+.stat-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.stat-info p {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.stat-info h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+}
+
+.stat-icon {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+/* Color variations handled via input class */
+.text-blue-400 { color: var(--blue-400); }
+.bg-blue-500\/20 { background-color: rgba(59, 130, 246, 0.2); }
+
+.text-emerald-400 { color: var(--emerald-400); }
+.bg-emerald-500\/20 { background-color: rgba(16, 185, 129, 0.2); }
+
+.text-zinc-400 { color: #a1a1aa; }
+.bg-zinc-500\/20 { background-color: rgba(113, 113, 122, 0.2); }
+
+.text-amber-400 { color: var(--amber-400); }
+.bg-amber-500\/20 { background-color: rgba(245, 158, 11, 0.2); }

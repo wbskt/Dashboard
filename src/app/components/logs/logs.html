@@ -1,0 +1,47 @@
+<!-- Toolbar & Filter -->
+<div class="logs-card animate-in">
+  <div class="logs-toolbar">
+    <div class="logs-actions">
+      <div class="search-input-wrapper" style="flex: 1; position: relative;">
+        <lucide-icon name="search" [size]="14" class="search-icon" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-dim);"></lucide-icon>
+        <input 
+          type="text" placeholder="Search logs (event, source, details)..." 
+          [(ngModel)]="searchQuery"
+          class="search-input"
+          style="width: 100%; background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.5rem 1rem 0.5rem 2.25rem; font-size: 0.75rem; font-weight: 500; outline: none;"
+        />
+      </div>
+      <button class="action-btn">
+        <lucide-icon name="filter" [size]="16"></lucide-icon>
+      </button>
+      <button class="action-btn">
+        <lucide-icon name="download" [size]="16"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="logs-table-wrapper">
+    <table class="logs-table">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Level</th>
+          <th>Source</th>
+          <th>Event</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of filteredLogs()" class="log-row">
+          <td class="timestamp">{{ log.timestamp }}</td>
+          <td>
+            <app-status-badge [status]="log.level"></app-status-badge>
+          </td>
+          <td class="source">{{ log.source }}</td>
+          <td class="event">{{ log.event }}</td>
+          <td class="details">{{ log.details }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
