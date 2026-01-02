@@ -2,13 +2,12 @@
 <div class="logs-card animate-in">
   <div class="logs-toolbar">
     <div class="logs-actions">
-      <div class="search-input-wrapper" style="flex: 1; position: relative;">
-        <lucide-icon name="search" [size]="14" class="search-icon" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-dim);"></lucide-icon>
+      <div class="search-input-wrapper">
+        <lucide-icon name="search" [size]="14" class="search-icon"></lucide-icon>
         <input 
           type="text" placeholder="Search logs (event, source, details)..." 
           [(ngModel)]="searchQuery"
           class="search-input"
-          style="width: 100%; background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.5rem 1rem 0.5rem 2.25rem; font-size: 0.75rem; font-weight: 500; outline: none;"
         />
       </div>
       <button class="action-btn">
