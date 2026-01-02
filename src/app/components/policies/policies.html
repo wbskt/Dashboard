@@ -43,7 +43,6 @@
           <th style="text-align: center;">Enrollment PIN</th>
           <th>Usage</th>
           <th style="text-align: center;">Auto-Enroll</th>
-          <th style="text-align: center;">Identifiers</th>
           <th>Status</th>
           <th></th>
         </tr>
@@ -82,14 +81,6 @@
           <td style="text-align: center;">
             <lucide-icon *ngIf="p.autoApprove" name="zap" [size]="14" style="color: var(--emerald-500); margin: 0 auto;"></lucide-icon>
             <lucide-icon *ngIf="!p.autoApprove" name="clock" [size]="14" style="color: var(--text-dim); margin: 0 auto;"></lucide-icon>
-          </td>
-          <td style="text-align: center;">
-            <div *ngIf="p.allowedIdentifiers && p.allowedIdentifiers.length > 0; else openAccess" class="restricted-badge">
-              <lucide-icon name="lock" [size]="10"></lucide-icon> {{ p.allowedIdentifiers.length }} Restricted
-            </div>
-            <ng-template #openAccess>
-              <span class="open-access">Open Access</span>
-            </ng-template>
           </td>
           <td>
             <app-status-badge [status]="p.status"></app-status-badge>
