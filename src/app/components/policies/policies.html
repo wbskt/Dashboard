@@ -39,10 +39,11 @@
     <table class="policies-table">
       <thead>
         <tr>
-          <th>Policy Configuration</th>
+          <th>Name</th>
           <th style="text-align: center;">Enrollment PIN</th>
           <th>Usage</th>
           <th style="text-align: center;">Auto-Enroll</th>
+          <th>Expiry</th>
           <th>Status</th>
           <th></th>
         </tr>
@@ -54,7 +55,6 @@
               <div class="status-dot" [ngClass]="p.status === 'Active' ? 'active' : 'inactive'"></div>
               <div class="policy-details">
                 <p>{{ p.name }}</p>
-                <p class="policy-expiry">Expires: {{ p.expiry }}</p>
               </div>
             </div>
           </td>
@@ -81,6 +81,9 @@
           <td style="text-align: center;">
             <lucide-icon *ngIf="p.autoApprove" name="zap" [size]="14" style="color: var(--emerald-500); margin: 0 auto;"></lucide-icon>
             <lucide-icon *ngIf="!p.autoApprove" name="clock" [size]="14" style="color: var(--text-dim); margin: 0 auto;"></lucide-icon>
+          </td>
+          <td>
+            <span class="policy-expiry">{{ p.expiry }}</span>
           </td>
           <td>
             <app-status-badge [status]="p.status"></app-status-badge>

@@ -177,12 +177,9 @@
 }
 
 .policy-expiry {
-  font-size: 10px;
+  font-size: 0.75rem;
   color: var(--text-muted);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.025em;
-  margin-top: 0.125rem;
+  font-weight: 500;
 }
 
 .pin-badge {
