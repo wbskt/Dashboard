@@ -80,10 +80,10 @@ export class AuthService {
   }
 
   private handleAuthResponse(response: UserLoginResponse) {
-    localStorage.setItem(this.ACCESS_TOKEN_KEY, response.accessToken);
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);
+    localStorage.setItem(this.ACCESS_TOKEN_KEY, response.AccessToken);
+    localStorage.setItem(this.REFRESH_TOKEN_KEY, response.RefreshToken);
     
-    const decoded = this.decodeToken(response.accessToken);
+    const decoded = this.decodeToken(response.AccessToken);
     if (decoded) {
       this.user.set(decoded);
     }
