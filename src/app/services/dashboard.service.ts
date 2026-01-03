@@ -1,16 +1,6 @@
-import { Injectable, signal } from '@angular/core';
-
-export interface Policy {
-  id: string;
-  name: string;
-  pin: string;
-  maxClients: number;
-  enrolled: number;
-  autoApprove: boolean;
-  status: 'Active' | 'Full' | 'Expired';
-  expiry: string;
-  allowedIdentifiers: string[];
-}
+import { inject, Injectable, signal } from '@angular/core';
+import { PolicyApi, PolicyResponse, CreatePolicyRequest } from '../api/policy.api';
+import { tap } from 'rxjs';
 
 export interface Client {
   id: string;
@@ -41,12 +31,6 @@ export interface Message {
   timestamp: string;
 }
 
-const INITIAL_POLICIES: Policy[] = [
-  { id: 'pol_1', name: 'NYC_Warehouse_ESP', pin: '8821-X', maxClients: 50, enrolled: 42, autoApprove: true, status: 'Active', expiry: '2025-12-31', allowedIdentifiers: [] },
-  { id: 'pol_2', name: 'London_Office_App', pin: '4412-B', maxClients: 10, enrolled: 1, autoApprove: false, status: 'Active', expiry: '2025-11-15', allowedIdentifiers: ['ios-app-v1', 'android-client-prod'] },
-  { id: 'pol_3', name: 'Legacy_Hardware', pin: '9001-Z', maxClients: 100, enrolled: 100, autoApprove: true, status: 'Full', expiry: '2024-12-01', allowedIdentifiers: [] },
-];
-
 const INITIAL_CLIENTS: Client[] = [
   { id: 'cli_1', identifier: 'esp8266-9912', type: 'Hardware', protocol: 'WebSocket', status: 'Online', lastSeen: 'Just now', policy: 'NYC_Warehouse_ESP', ip: '192.168.1.45', firmware: 'v2.1.0' },
   { id: 'cli_2', identifier: 'ios-app-pro', type: 'Application', protocol: 'HTTP', status: 'Online', lastSeen: '45s ago', policy: 'London_Office_App', ip: '72.14.21.9', version: '1.4.2' },
@@ -72,40 +56,40 @@ const MOCK_MESSAGES: Message[] = [
   providedIn: 'root'
 })
 export class DashboardService {
-  policies = signal<Policy[]>(INITIAL_POLICIES);
+  private policyApi = inject(PolicyApi);
+
+  policies = signal<PolicyResponse[]>([]);
   clients = signal<Client[]>(INITIAL_CLIENTS);
   logs = signal<Log[]>(INITIAL_LOGS);
   messages = signal<Message[]>(MOCK_MESSAGES);
 
-  addPolicy(newPolicy: Partial<Policy>) {
-    const finalPin = newPolicy.pin?.trim() !== '' 
-      ? newPolicy.pin 
-      : Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 3).toUpperCase();
+  constructor() {
+    this.loadPolicies();
+  }
 
-    const policy: Policy = {
-      id: `pol_${Date.now()}`,
-      name: newPolicy.name || 'Untitled',
-      maxClients: newPolicy.maxClients || 10,
-      autoApprove: newPolicy.autoApprove || false,
-      expiry: newPolicy.expiry || 'No Expiry',
-      pin: finalPin || '0000',
-      allowedIdentifiers: newPolicy.allowedIdentifiers || [],
-      enrolled: 0,
-      status: 'Active'
-    };
+  loadPolicies() {
+    this.policyApi.getPolicies().subscribe(policies => {
+      this.policies.set(policies);
+    });
+  }
 
-    this.policies.update(p => [policy, ...p]);
+  addPolicy(newPolicy: CreatePolicyRequest) {
+    return this.policyApi.createPolicy(newPolicy).pipe(
+      tap(policy => {
+        this.policies.update(p => [policy, ...p]);
 
-    // Add Log
-    const newLog: Log = {
-      id: `log_${Date.now()}`,
-      timestamp: new Date().toLocaleString(),
-      level: 'Success',
-      source: 'Admin',
-      event: 'Policy Created',
-      details: `Policy "${policy.name}" created with PIN ${policy.pin}.`
-    };
-    this.logs.update(l => [newLog, ...l]);
+        // Add Log
+        const newLog: Log = {
+          id: `log_${Date.now()}`,
+          timestamp: new Date().toLocaleString(),
+          level: 'Success',
+          source: 'Admin',
+          event: 'Policy Created',
+          details: `Policy "${policy.Name}" created with PIN ${policy.Pin}.`
+        };
+        this.logs.update(l => [newLog, ...l]);
+      })
+    );
   }
 
   addMessage(payload: string) {

@@ -1,8 +1,8 @@
 import { Component, inject, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
-import { DashboardService, Policy } from '../../services/dashboard.service';
+import { DashboardService } from '../../services/dashboard.service';
 import { StatusBadgeComponent } from '../ui/status-badge/status-badge';
 import { StatCardComponent } from '../ui/stat-card/stat-card';
 
@@ -10,6 +10,7 @@ import { StatCardComponent } from '../ui/stat-card/stat-card';
   selector: 'app-policies',
   standalone: true,
   imports: [CommonModule, FormsModule, LucideAngularModule, StatusBadgeComponent, StatCardComponent],
+  providers: [DatePipe],
   templateUrl: './policies.html',
   styleUrl: './policies.css'
 })
@@ -21,32 +22,26 @@ export class PoliciesComponent {
   showCreateModal = signal(false);
 
   newPolicy = {
-    name: '',
-    pin: '',
-    maxClients: 10,
-    allowedIdentifiersStr: '',
-    expiry: '',
-    autoApprove: false
+    Name: '',
+    MaxClients: 10,
+    Expiry: ''
   };
 
   filteredPolicies = computed(() => 
-    this.policies().filter(p => p.name.toLowerCase().includes(this.searchQuery().toLowerCase()))
+    this.policies().filter(p => p.Name.toLowerCase().includes(this.searchQuery().toLowerCase()))
   );
 
-  activeCount = computed(() => this.policies().filter(p => p.status === 'Active').length);
-  manualCheckCount = computed(() => this.policies().filter(p => !p.autoApprove).length);
+  activeCount = computed(() => this.policies().length); // Mock logic for stats since backend doesn't provide status yet
+  manualCheckCount = computed(() => 0); // Mock logic for stats
 
   createPolicy() {
     this.dashboardService.addPolicy({
-      name: this.newPolicy.name,
-      pin: this.newPolicy.pin,
-      maxClients: this.newPolicy.maxClients,
-      expiry: this.newPolicy.expiry,
-      autoApprove: this.newPolicy.autoApprove,
-      allowedIdentifiers: this.newPolicy.allowedIdentifiersStr.split(',').map(i => i.trim()).filter(i => i)
+      Name: this.newPolicy.Name,
+      MaxClients: this.newPolicy.MaxClients,
+      Expiry: this.newPolicy.Expiry ? new Date(this.newPolicy.Expiry).toISOString() : null
+    }).subscribe(() => {
+      this.showCreateModal.set(false);
+      this.newPolicy = { Name: '', MaxClients: 10, Expiry: '' };
     });
-    this.showCreateModal.set(false);
-    // Reset form
-    this.newPolicy = { name: '', pin: '', maxClients: 10, allowedIdentifiersStr: '', expiry: '', autoApprove: false };
   }
 }
