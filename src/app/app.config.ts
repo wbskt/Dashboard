@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor])),
-    { provide: API_URL, useValue: 'http://localhost:5000/api' }, // Centralized API Base URL
+    { provide: API_URL, useValue: 'http://localhost:5070/api' }, // Centralized API Base URL
     importProvidersFrom(LucideAngularModule.pick({ Users, Shield, Zap, FileText, Bell, RefreshCw, Search, Filter, Cpu, Monitor, Wifi, ChevronRight, MoreVertical, Trash2, Download, Send, ArrowUpRight, ArrowDownLeft, Activity, Calendar, Lock, Clipboard, Clock, X, LogOut, Plus }))
   ]
 };

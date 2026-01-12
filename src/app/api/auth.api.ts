@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { API_URL } from '../app.constants';
 
 export interface LoginRequest {
-  email: string;
-  password?: string;
+  Email: string;
+  Password?: string;
 }
 
 export interface UserLoginResponse {

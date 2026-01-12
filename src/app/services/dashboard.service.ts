@@ -69,7 +69,7 @@ export class DashboardService {
 
   loadPolicies() {
     this.policyApi.getPolicies().subscribe(policies => {
-      this.policies.set(policies);
+      this.policies.set(policies.Items);
     });
   }
 

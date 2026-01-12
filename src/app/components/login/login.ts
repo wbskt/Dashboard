@@ -27,7 +27,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       if (email && password) {
-        this.authService.login({ email, password }).subscribe();
+        this.authService.login({ Email: email, Password: password }).subscribe();
       }
     }
   }

@@ -11,6 +11,11 @@ export interface PolicyResponse {
   Pin: string;
 }
 
+export interface PolicyListResponse {
+  TotalCount: number;
+  Items: PolicyResponse[];
+}
+
 export interface CreatePolicyRequest {
   Name: string;
   MaxClients: number | null;
@@ -24,8 +29,8 @@ export class PolicyApi {
   private http = inject(HttpClient);
   private readonly baseUrl = inject(API_URL);
 
-  getPolicies(): Observable<PolicyResponse[]> {
-    return this.http.get<PolicyResponse[]>(`${this.baseUrl}/policies`);
+  getPolicies(): Observable<PolicyListResponse> {
+    return this.http.get<PolicyListResponse>(`${this.baseUrl}/policies`);
   }
 
   createPolicy(request: CreatePolicyRequest): Observable<PolicyResponse> {
