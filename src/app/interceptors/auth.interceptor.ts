@@ -37,10 +37,10 @@ function handle401Error(authService: AuthService, request: HttpRequest<unknown>,
     return authService.refresh().pipe(
       switchMap((response) => {
         isRefreshing = false;
-        refreshTokenSubject.next(response.AccessToken);
+        refreshTokenSubject.next(response.access_token);
         return next(request.clone({
           setHeaders: {
-            Authorization: `Bearer ${response.AccessToken}`
+            Authorization: `Bearer ${response.access_token}`
           }
         }));
       }),

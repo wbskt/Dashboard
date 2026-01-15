@@ -1,0 +1,17 @@
+{
+  "/auth": {
+    "target": "https://localhost:7001",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/auth": ""
+    },
+    "logLevel": "debug"
+  },
+  "/api": {
+    "target": "http://localhost:5070",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

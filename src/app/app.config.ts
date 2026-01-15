@@ -5,14 +5,15 @@ import { LucideAngularModule, Users, Shield, Zap, FileText, Bell, RefreshCw, Sea
 
 import { routes } from './app.routes';
 import { authInterceptor } from './interceptors/auth.interceptor';
-import { API_URL } from './app.constants';
+import { API_URL, AUTH_API_URL } from './app.constants';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor])),
-    { provide: API_URL, useValue: 'http://localhost:5070/api' }, // Centralized API Base URL
+    { provide: API_URL, useValue: '/api' }, // Proxied to http://localhost:5070/api
+    { provide: AUTH_API_URL, useValue: '/auth' }, // Proxied to https://localhost:7001
     importProvidersFrom(LucideAngularModule.pick({ Users, Shield, Zap, FileText, Bell, RefreshCw, Search, Filter, Cpu, Monitor, Wifi, ChevronRight, MoreVertical, Trash2, Download, Send, ArrowUpRight, ArrowDownLeft, Activity, Calendar, Lock, Clipboard, Clock, X, LogOut, Plus }))
   ]
 };
